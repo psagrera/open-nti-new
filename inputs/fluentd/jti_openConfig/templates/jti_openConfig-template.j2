@@ -1,0 +1,87 @@
+{%- for group in groups -%}
+<source>
+@type juniper_openconfig
+tag juniper.oc
+server [
+{%-  for host in group.hosts -%}
+{% if loop.last -%}
+"{{ host.name }}:{{ host.port }}"
+    {%- else -%}
+       "{{ host.name }}:{{ host.port }}",
+    {%- endif -%}
+{%- endfor -%}]
+sensors [ 
+{%-  for sensor in group.sensors -%}
+    {%- if loop.last -%}
+      "{{ sensor.frecuency }} {{sensor.name}}"
+    {%- else -%}
+      "{{ sensor.frecuency }} {{sensor.name}}",
+      {%- endif -%}
+{%  endfor %}]
+{%- if group.optional is defined %}
+  {%- for opt in group.optional -%}
+    {%- if opt.certfile is defined %}
+  certFile "{{ opt.certfile }}"
+    {%- endif %}
+    {%- if opt.username is defined %}
+  username "{{ opt.username }}"
+    {%- endif %}
+    {%- if opt.password is defined %}
+  pasword "{{ opt.password }}"
+    {%- endif %}
+ {%- endfor %}
+{%- endif %}
+
+{%- for env in envs -%}
+  {% if env.output_stdout == True %}
+  @log_level debug
+  {%- endif -%}
+{%-  endfor %}
+</source>
+{% endfor %}
+
+{%- for group in groups -%}
+  {%-  for sensor in group.sensors %}
+<match juniper.oc.{{ sensor.name}}>
+  type copy
+  {%- for env in envs -%}
+    {% if env.output_influxdb == True %}
+  <store>
+    type influxdb
+    host "{{ environ('INFLUXDB_HOSTNAME') }}"
+    port {{ environ('INFLUXDB_PORT') }}
+    dbname "{{ environ('INFLUXDB_DB') }}"
+    user "{{ environ('INFLUXDB_USER') }}"
+    password "{{ environ('INFLUXDB_USER_PASSWORD') }}"
+    use_ssl false
+    time_precision ms
+    tag_keys {{ sensor.tag_keys | tojson()}}
+    tag_keys_field key_fields
+    sequence_tag _seq
+    </store>
+    {%- endif %}
+    {% if env.output_kafka == True %}
+    <store>
+      @type kafka
+      # Brokers: you can choose either brokers or zookeeper.
+      brokers               {{ environ('KAFKA_ADDR') }}:{{ environ('KAFKA_PORT') }}
+      # zookeeper           <zookeeper_host>:<zookeeper_port> # Set brokers via Zookeeper
+      default_topic         {{ environ('KAFKA_TOPIC') }}
+      # default_partition_key (string)   :default => nil
+      output_data_type      {{ environ('KAFKA_DATA_TYPE') }} # |ltsv|msgpack|attr:<record name>|<formatter name>)
+      output_include_tag    true # |false) :default => false
+      output_include_time   true # |false) :default => false
+      # max_send_retries    (integer)    :default => 3
+      # required_acks       (integer)    :default => 0
+      # ack_timeout_ms      (integer)    :default => 1500
+      compression_codec     {{ environ('KAFKA_COMPRESSION_CODEC') }} 
+    </store>
+      {%- endif -%}
+    {%-  endfor %}
+    </match>
+  {%- endfor %}
+{%- endfor %}
+
+
+
+

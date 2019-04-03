@@ -1,0 +1,29 @@
+groups:
+  - mx960:
+    hosts:
+      - name: 10.102.187.188
+        port: 50051
+      - name: 10.102.187.167
+        port: 50051
+    sensors:
+      - name: /junos/system/linecard/cpu/memory/
+        frecuency: 10000
+        tag_keys: 
+          - "device"
+          - "/components/component/@name"
+          - "/components/component/propertiesproperty/@name"
+      - name: /interfaces/
+        frecuency: 30000
+        tag_keys:
+          - "device"
+          - "/interfaces/interface/@name"
+          - "/interfaces/interface/state/parent_ae_name"
+    #optional:
+    #  - certfile: /var/tmp/cert.pem
+    #    username: lab
+    #    password: lab123
+envs:
+  - output_influxdb: true
+    output_stdout: false
+    output_kafka: true 
+

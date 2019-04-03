@@ -1,0 +1,16 @@
+parser:
+    regex-command: show\s+ldp\s+database\s+summary\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //*[local-name() = 'ldp-database-information']/*[local-name() = 'ldp-database']/*[local-name() = 'ldp-database-summary']
+        loop:
+            key: ./*[local-name() = 'ldp-session-id']
+            sub-matches:
+            -
+                xpath: ./ldp-label-received
+                variable-name:  $host.protocols.ldp.database.summary.$key.ldp-label-received
+            -
+                xpath: ./ldp-label-advertised
+                variable-name:  $host.protocols.ldp.database.summary.$key.ldp-label-advertised

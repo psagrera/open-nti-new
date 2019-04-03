@@ -1,0 +1,37 @@
+[agent]
+  interval = "{{ environ('TELEGRAF_AGENT_INTERVAL_SECONDS') }}s"
+  round_interval = true
+  flush_interval =  "{{ environ('TELEGRAF_AGENT_FLUSH_INTERVAL') }}"
+  flush_jitter =  "{{ environ('TELEGRAF_AGENT_FLUSH_JITTER') }}"
+  debug = {{ environ('TELEGRAF_AGENT_DEBUG') }}
+  hostname = "{{ environ('TELEGRAF_AGENT_HOSTNAME') }}"
+  metric_batch_size = {{ environ('TELEGRAF_AGENT_METRIC_BATCH_SIZE') }}
+  metric_buffer_limit = {{ environ('TELEGRAF_AGENT_METRIC_BUFFER_LIMIT') }}
+  collection_jitter = "{{ environ('TELEGRAF_AGENT_COLLECTION_JITTER') }}"
+
+[[inputs.socket_listener]]
+    
+    service_address = "udp://:50000"
+    data_format = "juniperUDP"
+
+[[processors.converter]]
+  [processors.converter.fields]
+    integer = ["interface_stats.*","utilization.*"]
+    tag = [
+      {%-  for tag in tag_keys %}
+      {%- if loop.last -%}
+      "{{ tag }}"
+      {%- else -%}
+      "{{ tag }}",
+      {%- endif -%}
+      {%-  endfor %}]
+    
+[[outputs.influxdb]]
+
+  urls = ["http://{{ environ('INFLUXDB_ADDRESS') }}:{{ environ('INFLUXDB_PORT') }}"]
+  database = "{{ environ('INFLUXDB_DB_NAME') }}"
+  precision = "s"
+  retention_policy = ""
+  timeout = "{{ environ('INFLUXDB_DB_TIMEOUT') }}"
+  username = "{{ environ('INFLUXDB_DB_USER') }}"
+  password = "{{ environ('INFLUXDB_DB_PASSWD') }}"

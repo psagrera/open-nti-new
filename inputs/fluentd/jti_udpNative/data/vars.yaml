@@ -1,0 +1,25 @@
+sensors:
+  - name: cpu_memory_util_ext
+    tag_keys:
+      - "device"
+      - "utilization.application_utilization.name"
+      - "utilization.name"
+  - name: jnpr_packet_statistics_ext
+    tag_keys:
+      - "device"
+      - "packet_stats.name"
+  - name: jnpr_lsp_statistics_ext
+    tag_keys:
+      - "device"
+      - "lsp_stats_records.name"
+  - name: jnpr_interface_ext
+    tag_keys:
+      - "device"
+      - "interface_stats.if_name"
+      - "interface_stats.parent_ae_name"
+
+envs:
+  - output_influxdb: true
+    output_stdout: false 
+    output_kafka: true 
+    port: 50000

@@ -1,0 +1,26 @@
+sensors:
+  - name: "juniperNetworks.cpu_memory_util_ext"
+    tag_keys:
+      - "device"
+      - "utilization.application_utilization.name"
+      - "utilization.name"
+  - name: "juniperNetworks.jnpr_packet_statistics_ext"
+    tag_keys:
+      - "device"
+      - "packet_stats.name"
+  - name: "juniperNetworks.jnpr_lsp_statistics_ext"
+    tag_keys:
+      - "device"
+      - "lsp_stats_records.name"
+  - name: "juniperNetworks.jnpr_interface_ext"
+    tag_keys:
+      - "device"
+      - "interface_stats.if_name"
+      - "interface_stats.parent_ae_name"
+
+envs:
+  - output_influxdb: true
+    output_stdout: false 
+    output_kafka: false
+    ouput_elastic: true 
+    port: 50000

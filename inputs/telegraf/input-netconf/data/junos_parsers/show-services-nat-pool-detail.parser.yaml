@@ -1,0 +1,39 @@
+parser:
+    regex-command: show\s+services\s+nat\s+pool\s+detail\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //*[local-name() = 'sfw-per-service-set-nat-pool']/*[local-name() = 'service-nat-pool']
+        loop:
+            interface_name: ./*[local-name() = '../interface-name']
+            service_set: ./*[local-name() = '../service-set-name']
+            pool_name: ./*[local-name() = './pool-name']
+            sub-matches:
+            -
+                xpath: ./pool-ports-in-use
+                variable-name:  $host.services.nat.pool.$interface_name.$service_set.$pool_name.pool-ports-in-use
+            -
+                xpath: ./pool-out-of-port-errors
+                variable-name:  $host.services.nat.pool.$interface_name.$service_set.$pool_name.pool-out-of-port-errors
+            -
+                xpath: ./pool-max-ports-in-use
+                variable-name:  $host.services.nat.pool.$interface_name.$service_set.$pool_name.pool-max-ports-in-use
+            -
+                xpath: ./pool-app-port-errors
+                variable-name:  $host.services.nat.pool.$interface_name.$service_set.$pool_name.pool-app-port-errors
+            -
+                xpath: ./max-port-blocks-used
+                variable-name:  $host.services.nat.pool.$interface_name.$service_set.$pool_name.max-port-blocks-used
+            -
+                xpath: ./port-blocks-in-use
+                variable-name:  $host.services.nat.pool.$interface_name.$service_set.$pool_name.port-blocks-in-use
+            -
+                xpath: ./port-block-allocation-errors
+                variable-name:  $host.services.nat.pool.$interface_name.$service_set.$pool_name.port-block-allocation-errors
+            -
+                xpath: ./port-block-mem-alloc-failure-errors
+                variable-name:  $host.services.nat.pool.$interface_name.$service_set.$pool_name.port-block-mem-alloc-failure-errors
+            -
+                xpath: ./pool-users
+                variable-name:  $host.services.nat.pool.$interface_name.$service_set.$pool_name.pool-users

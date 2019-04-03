@@ -1,0 +1,113 @@
+
+<source>
+@type udp
+tag juniperNetworks
+format juniper_udp_native
+{%- for env in envs %}
+port {{ env.port}}
+{%-  endfor %}
+bind 0.0.0.0
+body_size_limit 5000
+</source>
+
+<match juniperNetworks>
+  @type rewrite_tag_filter
+  rewriterule1 sensor_name (.+)  ${tag}.$1
+</match>
+
+
+{%-  for sensor in sensors %}
+<match juniperNetworks.{{ sensor.name}}>
+  type copy
+  {%- for env in envs -%}
+    {% if env.output_stdout == True %}
+    <store>
+      @type stdout
+      @id stdout_output
+      localtime
+    </store>
+     {%- endif %}
+    {% if env.output_influxdb == True %}
+  <store>
+    type influxdb
+    host "{{ environ('INFLUXDB_HOSTNAME') }}"
+    port {{ environ('INFLUXDB_PORT') }}
+    dbname "{{ environ('INFLUXDB_DB') }}"
+    user "{{ environ('INFLUXDB_USER') }}"
+    password "{{ environ('INFLUXDB_USER_PASSWORD') }}"
+    use_ssl false
+    time_precision ms
+    tag_keys {{ sensor.tag_keys | tojson()}}
+    tag_keys_field key_fields
+    sequence_tag _seq
+    </store>
+    {%- endif %}
+    {% if env.output_kafka == True %}
+    <store>
+      @type kafka
+      # Brokers: you can choose either brokers or zookeeper.
+      brokers               {{ environ('KAFKA_ADDR') }}:{{ environ('KAFKA_PORT') }}
+      # zookeeper           <zookeeper_host>:<zookeeper_port> # Set brokers via Zookeeper
+      default_topic         {{ environ('KAFKA_TOPIC') }}
+      # default_partition_key (string)   :default => nil
+      output_data_type      {{ environ('KAFKA_DATA_TYPE') }} # |ltsv|msgpack|attr:<record name>|<formatter name>)
+      output_include_tag    true # |false) :default => false
+      output_include_time   true # |false) :default => false
+      # max_send_retries    (integer)    :default => 3
+      # required_acks       (integer)    :default => 0
+      # ack_timeout_ms      (integer)    :default => 1500
+      compression_codec     {{ environ('KAFKA_COMPRESSION_CODEC') }} 
+    </store>
+      {%- endif -%}
+    {%-  endfor %}
+    </match>
+  {%- endfor %}
+  <match juniperNetworks.**>
+  type copy
+  {%- for env in envs -%}
+    {% if env.output_stdout == True %}
+    <store>
+      @type stdout
+      @id stdout_output
+      localtime
+    </store>
+     {%- endif %}
+    {% if env.output_influxdb == True %}
+  <store>
+    type influxdb
+    host "{{ environ('INFLUXDB_HOSTNAME') }}"
+    port {{ environ('INFLUXDB_PORT') }}
+    dbname "{{ environ('INFLUXDB_DB') }}"
+    user "{{ environ('INFLUXDB_USER') }}"
+    password "{{ environ('INFLUXDB_USER_PASSWORD') }}"
+    use_ssl false
+    time_precision ms
+    tag_keys ["device"]
+    tag_keys_field key_fields
+    sequence_tag _seq
+    </store>
+    {%- endif %}
+    {% if env.output_kafka == True %}
+    <store>
+      @type kafka
+      # Brokers: you can choose either brokers or zookeeper.
+      brokers               {{ environ('KAFKA_ADDR') }}:{{ environ('KAFKA_PORT') }}
+      # zookeeper           <zookeeper_host>:<zookeeper_port> # Set brokers via Zookeeper
+      default_topic         {{ environ('KAFKA_TOPIC') }}
+      # default_partition_key (string)   :default => nil
+      output_data_type      {{ environ('KAFKA_DATA_TYPE') }} # |ltsv|msgpack|attr:<record name>|<formatter name>)
+      output_include_tag    true # |false) :default => false
+      output_include_time   true # |false) :default => false
+      # max_send_retries    (integer)    :default => 3
+      # required_acks       (integer)    :default => 0
+      # ack_timeout_ms      (integer)    :default => 1500
+      compression_codec     {{ environ('KAFKA_COMPRESSION_CODEC') }} 
+    </store>
+      {%- endif -%}
+      {%- endfor %}
+    </match>
+
+
+
+
+

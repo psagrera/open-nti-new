@@ -1,0 +1,79 @@
+ {%- for group in groups -%}
+input {
+    openconfig {
+        server => [ "{{group.hostname}}" ]
+        sensors => [
+        {%-  for sensor in group.sensors %}
+            {%- if loop.last -%}
+                "{{sensor.name}}"
+            {%- else -%}
+                "{{sensor.name}}",
+            {%- endif -%}
+            {%- endfor -%}]
+        port => {{ group.port }}
+        sampleFrequency => {{ group.frecuency}} 
+        {%- if group.optional is defined %}
+            {%- for opt in group.optional -%}
+                {%- if opt.certfile is defined %}
+        certFile => "{{ opt.certfile }}"
+                {%- endif %}
+                {%- if opt.username is defined %}
+        username => "{{ opt.username }}"
+                {%- endif %}
+                {%- if opt.password is defined %}
+        password => pasword "{{ opt.password }}"
+                {%- endif %}
+                {%- if opt.clientID is defined %}
+        clientID => "{{ opt.clientID }}"
+                {%- endif %}  
+            {%-  endfor %}
+        {%- endif %} 
+    }
+}
+{%  endfor %}
+
+output {
+    {%- for env in envs -%}
+        {%- for group in groups -%}
+            {%-  for sensor in group.sensors %}
+    {% if env.output_stdout == True %}
+    stdout {codec => rubydebug}
+    {%- endif %}
+    {% if env.output_influxdb == True %}
+    if [sensor_name] == "{{ sensor.name }}" {  
+    influxdb {
+        db => "{{ environ('INFLUXDB_DB') }}"
+        host => "influxdb"
+        port => 8086
+        user => "juniper"
+        password => "juniper"
+        retention_policy => "four_weeks"
+        allow_time_override => true
+        use_event_fields_for_data_points => true
+        measurement => "{{ sensor.name }}"
+        send_as_tags => {{ sensor.tag_keys | tojson()}}
+        #exclude_fields => ["sensor_name"]
+        #exclude_fields => ["@timestamp", "@Version"]
+        #exclude_fields => ["@timestamp", "@version"]
+    }
+    }
+    {%- endif %}
+        {%- endfor %}
+        {%- endfor %}
+
+     {% if env.output_kafka == True %}
+      kafka {
+        codec => json
+        topic_id => "logstash-jti-oc"
+        bootstrap_servers => ["kafka:9092"]
+      }
+    {%- endif -%}
+
+    {% if env.output_elastic == True %}
+        elasticsearch {
+            hosts => [ "elasticsearch:9200" ]
+            index => "jti-logstash-udp-%{+YYYY-MM-dd_HH}"
+        }
+    {%- endif -%}
+{%-  endfor %}
+}

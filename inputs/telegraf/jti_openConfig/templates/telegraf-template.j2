@@ -1,0 +1,46 @@
+[agent]
+  interval = "{{ environ('TELEGRAF_AGENT_INTERVAL_SECONDS') }}s"
+  round_interval = true
+  flush_interval =  "{{ environ('TELEGRAF_AGENT_FLUSH_INTERVAL') }}"
+  flush_jitter =  "{{ environ('TELEGRAF_AGENT_FLUSH_JITTER') }}"
+  debug = {{ environ('TELEGRAF_AGENT_DEBUG') }}
+  hostname = "{{ environ('TELEGRAF_AGENT_HOSTNAME') }}"
+  metric_batch_size = {{ environ('TELEGRAF_AGENT_METRIC_BATCH_SIZE') }}
+  metric_buffer_limit = {{ environ('TELEGRAF_AGENT_METRIC_BUFFER_LIMIT') }}
+  collection_jitter = "{{ environ('TELEGRAF_AGENT_COLLECTION_JITTER') }}"
+
+[[outputs.influxdb]]
+  urls = ["http://{{ environ('INFLUXDB_ADDRESS') }}:{{ environ('INFLUXDB_PORT') }}"]
+  database = "{{ environ('INFLUXDB_DB_NAME') }}"
+  precision = "s"
+  retention_policy = ""
+  timeout = "{{ environ('INFLUXDB_DB_TIMEOUT') }}"
+  username = "{{ environ('INFLUXDB_DB_USER') }}"
+  password = "{{ environ('INFLUXDB_DB_PASSWD') }}"
+{%- for env in envs %}
+
+[[inputs.jti_openconfig_telemetry]]
+{%- for group in groups %}
+  servers = [
+      {%-  for host in group.hosts -%}
+          {%- if loop.last -%}
+            "{{ host.name }}:{{ host.port }}"
+          {%- else -%}
+             "{{ host.name }}:{{ host.port }}",
+          {%- endif -%}
+          {%- endfor -%}]
+
+  ## Frequency to get data in millisecond
+   sample_frequency = "{{env.default_frecuency}}ms"
+   sensors = [ 
+{%-  for sensor in group.sensors -%}
+    {%- if loop.last -%}
+      "{{ sensor.frecuency }}ms {{sensor.name}}"
+    {%- else -%}
+      "{{ sensor.frecuency }}ms {{sensor.name}}",
+      {%- endif -%}
+{%  endfor %}]
+{%- endfor %}
+
+str_as_tags = false
+{%- endfor %}

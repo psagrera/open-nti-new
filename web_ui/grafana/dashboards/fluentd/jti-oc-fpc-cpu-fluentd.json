@@ -1,0 +1,1256 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 1,
+  "iteration": 1542366556146,
+  "links": [],
+  "panels": [
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "influxdb_fluentd",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "percentage": false,
+      "pointradius": 0.5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "[[tag_device]]-[[tag_/components/component/@name]]-[[tag_/components/component/propertiesproperty/@name]]",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "device"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "/components/component/@name"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "/components/component/propertiesproperty/@name"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "juniper.oc./junos/system/linecard/cpu/memory/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "/components/component/propertiesproperty/state/value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "10s"
+                ],
+                "type": "non_negative_derivative"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "device",
+              "operator": "=~",
+              "value": "/^$device$/"
+            },
+            {
+              "condition": "AND",
+              "key": "/components/component/@name",
+              "operator": "=~",
+              "value": "/^$component_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "/components/component/propertiesproperty/@name",
+              "operator": "=~",
+              "value": "/^$component_property$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "FPC CPU memory",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": [
+    "jti",
+    "fluentd",
+    "OC"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb_fluentd",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "device",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "10.102.187.167",
+            "value": "10.102.187.167"
+          },
+          {
+            "selected": false,
+            "text": "10.102.187.188",
+            "value": "10.102.187.188"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"juniper.oc./junos/system/linecard/cpu/memory/\" with KEY=\"device\"",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb_fluentd",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "component_name",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "FPC0:CPU0",
+            "value": "FPC0:CPU0"
+          },
+          {
+            "selected": false,
+            "text": "FPC1:CPU0",
+            "value": "FPC1:CPU0"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"juniper.oc./junos/system/linecard/cpu/memory/\" with KEY=\"/components/component/@name\" WHERE device =~ /^$device/",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb_fluentd",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "component_property",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-802-1br-allocations",
+            "value": "mem-util-kernel-802-1br-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-802-1br-allocations-failed",
+            "value": "mem-util-kernel-802-1br-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-802-1br-bytes-allocated",
+            "value": "mem-util-kernel-802-1br-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-802-1br-frees",
+            "value": "mem-util-kernel-802-1br-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-agent-allocations",
+            "value": "mem-util-kernel-agent-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-agent-allocations-failed",
+            "value": "mem-util-kernel-agent-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-agent-bytes-allocated",
+            "value": "mem-util-kernel-agent-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-agent-frees",
+            "value": "mem-util-kernel-agent-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-bytes-allocated",
+            "value": "mem-util-kernel-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-class-allocations",
+            "value": "mem-util-kernel-class-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-class-allocations-failed",
+            "value": "mem-util-kernel-class-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-class-bytes-allocated",
+            "value": "mem-util-kernel-class-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-class-frees",
+            "value": "mem-util-kernel-class-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-cos-allocations",
+            "value": "mem-util-kernel-cos-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-cos-allocations-failed",
+            "value": "mem-util-kernel-cos-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-cos-bytes-allocated",
+            "value": "mem-util-kernel-cos-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-cos-frees",
+            "value": "mem-util-kernel-cos-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-cos-halp-allocations",
+            "value": "mem-util-kernel-cos-halp-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-cos-halp-allocations-failed",
+            "value": "mem-util-kernel-cos-halp-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-cos-halp-bytes-allocated",
+            "value": "mem-util-kernel-cos-halp-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-cos-halp-frees",
+            "value": "mem-util-kernel-cos-halp-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-counters-allocations",
+            "value": "mem-util-kernel-counters-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-counters-allocations-failed",
+            "value": "mem-util-kernel-counters-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-counters-bytes-allocated",
+            "value": "mem-util-kernel-counters-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-counters-frees",
+            "value": "mem-util-kernel-counters-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-bd-e-allocations",
+            "value": "mem-util-kernel-features-bd-e-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-bd-e-allocations-failed",
+            "value": "mem-util-kernel-features-bd-e-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-bd-e-bytes-allocated",
+            "value": "mem-util-kernel-features-bd-e-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-bd-e-frees",
+            "value": "mem-util-kernel-features-bd-e-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-default-allocations",
+            "value": "mem-util-kernel-features-default-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-default-allocations-failed",
+            "value": "mem-util-kernel-features-default-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-default-bytes-allocated",
+            "value": "mem-util-kernel-features-default-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-default-frees",
+            "value": "mem-util-kernel-features-default-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-exception-allocations",
+            "value": "mem-util-kernel-features-exception-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-exception-allocations-failed",
+            "value": "mem-util-kernel-features-exception-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-exception-bytes-allocated",
+            "value": "mem-util-kernel-features-exception-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-exception-frees",
+            "value": "mem-util-kernel-features-exception-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-iff-allocations",
+            "value": "mem-util-kernel-features-iff-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-iff-allocations-failed",
+            "value": "mem-util-kernel-features-iff-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-iff-bytes-allocated",
+            "value": "mem-util-kernel-features-iff-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-iff-frees",
+            "value": "mem-util-kernel-features-iff-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-iif-allocations",
+            "value": "mem-util-kernel-features-iif-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-iif-allocations-failed",
+            "value": "mem-util-kernel-features-iif-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-iif-bytes-allocated",
+            "value": "mem-util-kernel-features-iif-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-iif-frees",
+            "value": "mem-util-kernel-features-iif-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-ktree-allocations",
+            "value": "mem-util-kernel-features-ktree-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-ktree-allocations-failed",
+            "value": "mem-util-kernel-features-ktree-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-ktree-bytes-allocated",
+            "value": "mem-util-kernel-features-ktree-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-ktree-frees",
+            "value": "mem-util-kernel-features-ktree-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-nh-allocations",
+            "value": "mem-util-kernel-features-nh-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-nh-allocations-failed",
+            "value": "mem-util-kernel-features-nh-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-nh-bytes-allocated",
+            "value": "mem-util-kernel-features-nh-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-nh-frees",
+            "value": "mem-util-kernel-features-nh-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-nh-ingress-allocations",
+            "value": "mem-util-kernel-features-nh-ingress-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-nh-ingress-allocations-failed",
+            "value": "mem-util-kernel-features-nh-ingress-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-nh-ingress-bytes-allocated",
+            "value": "mem-util-kernel-features-nh-ingress-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-nh-ingress-frees",
+            "value": "mem-util-kernel-features-nh-ingress-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-off-allocations",
+            "value": "mem-util-kernel-features-off-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-off-allocations-failed",
+            "value": "mem-util-kernel-features-off-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-off-bytes-allocated",
+            "value": "mem-util-kernel-features-off-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-off-frees",
+            "value": "mem-util-kernel-features-off-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-oif-allocations",
+            "value": "mem-util-kernel-features-oif-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-oif-allocations-failed",
+            "value": "mem-util-kernel-features-oif-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-oif-bytes-allocated",
+            "value": "mem-util-kernel-features-oif-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-oif-frees",
+            "value": "mem-util-kernel-features-oif-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-stream-allocations",
+            "value": "mem-util-kernel-features-stream-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-stream-allocations-failed",
+            "value": "mem-util-kernel-features-stream-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-stream-bytes-allocated",
+            "value": "mem-util-kernel-features-stream-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-features-stream-frees",
+            "value": "mem-util-kernel-features-stream-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-filter-allocations",
+            "value": "mem-util-kernel-filter-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-filter-allocations-failed",
+            "value": "mem-util-kernel-filter-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-filter-bytes-allocated",
+            "value": "mem-util-kernel-filter-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-filter-frees",
+            "value": "mem-util-kernel-filter-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-filter-halp-allocations",
+            "value": "mem-util-kernel-filter-halp-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-filter-halp-allocations-failed",
+            "value": "mem-util-kernel-filter-halp-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-filter-halp-bytes-allocated",
+            "value": "mem-util-kernel-filter-halp-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-filter-halp-frees",
+            "value": "mem-util-kernel-filter-halp-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-hash-allocations",
+            "value": "mem-util-kernel-hash-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-hash-allocations-failed",
+            "value": "mem-util-kernel-hash-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-hash-bytes-allocated",
+            "value": "mem-util-kernel-hash-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-hash-frees",
+            "value": "mem-util-kernel-hash-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ifd-allocations",
+            "value": "mem-util-kernel-ifd-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ifd-allocations-failed",
+            "value": "mem-util-kernel-ifd-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ifd-bytes-allocated",
+            "value": "mem-util-kernel-ifd-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ifd-frees",
+            "value": "mem-util-kernel-ifd-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ifd-halp-allocations",
+            "value": "mem-util-kernel-ifd-halp-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ifd-halp-allocations-failed",
+            "value": "mem-util-kernel-ifd-halp-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ifd-halp-bytes-allocated",
+            "value": "mem-util-kernel-ifd-halp-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ifd-halp-frees",
+            "value": "mem-util-kernel-ifd-halp-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-iff-allocations",
+            "value": "mem-util-kernel-iff-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-iff-allocations-failed",
+            "value": "mem-util-kernel-iff-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-iff-bytes-allocated",
+            "value": "mem-util-kernel-iff-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-iff-frees",
+            "value": "mem-util-kernel-iff-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-iff-halp-allocations",
+            "value": "mem-util-kernel-iff-halp-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-iff-halp-allocations-failed",
+            "value": "mem-util-kernel-iff-halp-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-iff-halp-bytes-allocated",
+            "value": "mem-util-kernel-iff-halp-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-iff-halp-frees",
+            "value": "mem-util-kernel-iff-halp-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ifl-allocations",
+            "value": "mem-util-kernel-ifl-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ifl-allocations-failed",
+            "value": "mem-util-kernel-ifl-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ifl-bytes-allocated",
+            "value": "mem-util-kernel-ifl-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ifl-frees",
+            "value": "mem-util-kernel-ifl-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ifl-halp-allocations",
+            "value": "mem-util-kernel-ifl-halp-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ifl-halp-allocations-failed",
+            "value": "mem-util-kernel-ifl-halp-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ifl-halp-bytes-allocated",
+            "value": "mem-util-kernel-ifl-halp-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ifl-halp-frees",
+            "value": "mem-util-kernel-ifl-halp-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-iftable-allocations",
+            "value": "mem-util-kernel-iftable-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-iftable-allocations-failed",
+            "value": "mem-util-kernel-iftable-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-iftable-bytes-allocated",
+            "value": "mem-util-kernel-iftable-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-iftable-frees",
+            "value": "mem-util-kernel-iftable-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-igmp-allocations",
+            "value": "mem-util-kernel-igmp-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-igmp-allocations-failed",
+            "value": "mem-util-kernel-igmp-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-igmp-bytes-allocated",
+            "value": "mem-util-kernel-igmp-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-igmp-frees",
+            "value": "mem-util-kernel-igmp-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-inline-ka-allocations",
+            "value": "mem-util-kernel-inline-ka-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-inline-ka-allocations-failed",
+            "value": "mem-util-kernel-inline-ka-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-inline-ka-bytes-allocated",
+            "value": "mem-util-kernel-inline-ka-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-inline-ka-frees",
+            "value": "mem-util-kernel-inline-ka-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ipsec-allocations",
+            "value": "mem-util-kernel-ipsec-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ipsec-allocations-failed",
+            "value": "mem-util-kernel-ipsec-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ipsec-bytes-allocated",
+            "value": "mem-util-kernel-ipsec-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ipsec-frees",
+            "value": "mem-util-kernel-ipsec-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ktree-allocations",
+            "value": "mem-util-kernel-ktree-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ktree-allocations-failed",
+            "value": "mem-util-kernel-ktree-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ktree-bytes-allocated",
+            "value": "mem-util-kernel-ktree-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-ktree-frees",
+            "value": "mem-util-kernel-ktree-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-l2-halp-allocations",
+            "value": "mem-util-kernel-l2-halp-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-l2-halp-allocations-failed",
+            "value": "mem-util-kernel-l2-halp-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-l2-halp-bytes-allocated",
+            "value": "mem-util-kernel-l2-halp-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-l2-halp-frees",
+            "value": "mem-util-kernel-l2-halp-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-l2pd-ifd-allocations",
+            "value": "mem-util-kernel-l2pd-ifd-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-l2pd-ifd-allocations-failed",
+            "value": "mem-util-kernel-l2pd-ifd-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-l2pd-ifd-bytes-allocated",
+            "value": "mem-util-kernel-l2pd-ifd-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-l2pd-ifd-frees",
+            "value": "mem-util-kernel-l2pd-ifd-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-l2pfd-ifl-allocations",
+            "value": "mem-util-kernel-l2pfd-ifl-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-l2pfd-ifl-allocations-failed",
+            "value": "mem-util-kernel-l2pfd-ifl-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-l2pfd-ifl-bytes-allocated",
+            "value": "mem-util-kernel-l2pfd-ifl-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-l2pfd-ifl-frees",
+            "value": "mem-util-kernel-l2pfd-ifl-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-nh-allocations",
+            "value": "mem-util-kernel-nh-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-nh-allocations-failed",
+            "value": "mem-util-kernel-nh-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-nh-bytes-allocated",
+            "value": "mem-util-kernel-nh-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-nh-frees",
+            "value": "mem-util-kernel-nh-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-nh-halp-allocations",
+            "value": "mem-util-kernel-nh-halp-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-nh-halp-allocations-failed",
+            "value": "mem-util-kernel-nh-halp-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-nh-halp-bytes-allocated",
+            "value": "mem-util-kernel-nh-halp-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-nh-halp-frees",
+            "value": "mem-util-kernel-nh-halp-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-pppoe-allocations",
+            "value": "mem-util-kernel-pppoe-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-pppoe-allocations-failed",
+            "value": "mem-util-kernel-pppoe-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-pppoe-bytes-allocated",
+            "value": "mem-util-kernel-pppoe-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-pppoe-frees",
+            "value": "mem-util-kernel-pppoe-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-rt-allocations",
+            "value": "mem-util-kernel-rt-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-rt-allocations-failed",
+            "value": "mem-util-kernel-rt-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-rt-bytes-allocated",
+            "value": "mem-util-kernel-rt-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-rt-frees",
+            "value": "mem-util-kernel-rt-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-rt-halp-allocations",
+            "value": "mem-util-kernel-rt-halp-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-rt-halp-allocations-failed",
+            "value": "mem-util-kernel-rt-halp-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-rt-halp-bytes-allocated",
+            "value": "mem-util-kernel-rt-halp-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-rt-halp-frees",
+            "value": "mem-util-kernel-rt-halp-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-rt-mac-allocations",
+            "value": "mem-util-kernel-rt-mac-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-rt-mac-allocations-failed",
+            "value": "mem-util-kernel-rt-mac-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-rt-mac-bytes-allocated",
+            "value": "mem-util-kernel-rt-mac-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-rt-mac-frees",
+            "value": "mem-util-kernel-rt-mac-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-rtt-allocations",
+            "value": "mem-util-kernel-rtt-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-rtt-allocations-failed",
+            "value": "mem-util-kernel-rtt-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-rtt-bytes-allocated",
+            "value": "mem-util-kernel-rtt-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-rtt-frees",
+            "value": "mem-util-kernel-rtt-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-size",
+            "value": "mem-util-kernel-size"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-table-allocations",
+            "value": "mem-util-kernel-table-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-table-allocations-failed",
+            "value": "mem-util-kernel-table-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-table-bytes-allocated",
+            "value": "mem-util-kernel-table-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-table-frees",
+            "value": "mem-util-kernel-table-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-toe-lu-stats-allocations",
+            "value": "mem-util-kernel-toe-lu-stats-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-toe-lu-stats-allocations-failed",
+            "value": "mem-util-kernel-toe-lu-stats-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-toe-lu-stats-bytes-allocated",
+            "value": "mem-util-kernel-toe-lu-stats-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-toe-lu-stats-frees",
+            "value": "mem-util-kernel-toe-lu-stats-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-utilization",
+            "value": "mem-util-kernel-utilization"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-vbf-allocations",
+            "value": "mem-util-kernel-vbf-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-vbf-allocations-failed",
+            "value": "mem-util-kernel-vbf-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-vbf-bytes-allocated",
+            "value": "mem-util-kernel-vbf-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-vbf-frees",
+            "value": "mem-util-kernel-vbf-frees"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-vbf-halp-allocations",
+            "value": "mem-util-kernel-vbf-halp-allocations"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-vbf-halp-allocations-failed",
+            "value": "mem-util-kernel-vbf-halp-allocations-failed"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-vbf-halp-bytes-allocated",
+            "value": "mem-util-kernel-vbf-halp-bytes-allocated"
+          },
+          {
+            "selected": false,
+            "text": "mem-util-kernel-vbf-halp-frees",
+            "value": "mem-util-kernel-vbf-halp-frees"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"juniper.oc./junos/system/linecard/cpu/memory/\" with KEY=\"/components/component/propertiesproperty/@name\" WHERE device =~ /^$device/",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "JTI-OC-FPC-CPU-fluentd",
+  "uid": "iBpLCpBiz",
+  "version": 1
+}
+

@@ -1,0 +1,916 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 3,
+  "iteration": 1542367193678,
+  "links": [],
+  "panels": [
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "influxdb_fluentd",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 0.5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "[[tag_device]]-[[tag_interface_stats.parent_ae_name]]-[[tag_interface_stats.if_name]]-$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(\"interface_stats.ingress_stats.if_pkts\"), 1s) AS \"IN\" FROM \"juniperNetworks.jnpr_interface_ext\" WHERE \"device\" =~ /^$device/ AND \"interface_stats.parent_ae_name\" =~ /^$ae_name$/ AND $timeFilter GROUP BY time($__interval), \"device\",\"interface_stats.parent_ae_name\",\"interface_stats.if_name\" fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Interfaces - INPUT pps (AE per member)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "pps",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "influxdb_fluentd",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 2,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "percentage": false,
+      "pointradius": 0.5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "[[tag_device]]-[[tag_interface_stats.if_name]]-$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(\"interface_stats.ingress_stats.if_pkts\"), 1s) AS \"IN\" FROM \"juniperNetworks.jnpr_interface_ext\" WHERE \"device\" =~ /^$device/ AND \"interface_stats.if_name\" =~ /^$if_name$/ AND $timeFilter GROUP BY time($__interval), \"device\", \"interface_stats.if_name\" fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Interfaces - INPUT - pps",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "pps",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "influxdb_fluentd",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 9
+      },
+      "id": 6,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "percentage": false,
+      "pointradius": 0.5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "[[tag_device]]-[[tag_interface_stats.parent_ae_name]]-[[tag_interface_stats.if_name]]-$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(\"interface_stats.egress_stats.if_pkts\"), 1s) AS \"OUT\" FROM \"juniperNetworks.jnpr_interface_ext\" WHERE \"device\" =~ /^$device/ AND \"interface_stats.parent_ae_name\" =~ /^$ae_name$/ AND $timeFilter GROUP BY time($__interval), \"device\",\"interface_stats.parent_ae_name\",\"interface_stats.if_name\" fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Interfaces - OUTPUT - pps (AE per member)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "pps",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "influxdb_fluentd",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 8,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "percentage": false,
+      "pointradius": 0.5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "[[tag_device]]-[[tag_interface_stats.if_name]]-$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(\"interface_stats.egress_stats.if_pkts\"), 1s) AS \"OUT\" FROM \"juniperNetworks.jnpr_interface_ext\" WHERE \"device\" =~ /^$device/ AND \"interface_stats.if_name\" =~ /^$if_name$/ AND $timeFilter GROUP BY time($__interval), \"device\", \"interface_stats.if_name\" fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Interfaces - OUTPUT pps",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "pps",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": [
+    "jti",
+    "fluentd",
+    "UDP"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb_fluentd",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "device",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "mx1_re:10.235.1.2",
+            "value": "mx1_re:10.235.1.2"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"juniperNetworks.jnpr_interface_ext\" WITH KEY = \"device\"",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb_fluentd",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "if_name",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/0",
+            "value": "ge-0/0/0"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/1",
+            "value": "ge-0/0/1"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/2",
+            "value": "ge-0/0/2"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/3",
+            "value": "ge-0/0/3"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/4",
+            "value": "ge-0/0/4"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/5",
+            "value": "ge-0/0/5"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/6",
+            "value": "ge-0/0/6"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/7",
+            "value": "ge-0/0/7"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/8",
+            "value": "ge-0/0/8"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/9",
+            "value": "ge-0/0/9"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/1/0",
+            "value": "ge-0/1/0"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/1/1",
+            "value": "ge-0/1/1"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/1/2",
+            "value": "ge-0/1/2"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/0",
+            "value": "ge-1/0/0"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/1",
+            "value": "ge-1/0/1"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/2",
+            "value": "ge-1/0/2"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/3",
+            "value": "ge-1/0/3"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/4",
+            "value": "ge-1/0/4"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/5",
+            "value": "ge-1/0/5"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/6",
+            "value": "ge-1/0/6"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/7",
+            "value": "ge-1/0/7"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/8",
+            "value": "ge-1/0/8"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/9",
+            "value": "ge-1/0/9"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/0",
+            "value": "ge-1/1/0"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/1",
+            "value": "ge-1/1/1"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/2",
+            "value": "ge-1/1/2"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/3",
+            "value": "ge-1/1/3"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/4",
+            "value": "ge-1/1/4"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/5",
+            "value": "ge-1/1/5"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/6",
+            "value": "ge-1/1/6"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/7",
+            "value": "ge-1/1/7"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/8",
+            "value": "ge-1/1/8"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/9",
+            "value": "ge-1/1/9"
+          },
+          {
+            "selected": false,
+            "text": "xe-1/2/0",
+            "value": "xe-1/2/0"
+          },
+          {
+            "selected": false,
+            "text": "xe-1/2/1",
+            "value": "xe-1/2/1"
+          },
+          {
+            "selected": false,
+            "text": "xe-1/3/0",
+            "value": "xe-1/3/0"
+          },
+          {
+            "selected": false,
+            "text": "xe-1/3/1",
+            "value": "xe-1/3/1"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"juniperNetworks.jnpr_interface_ext\" with KEY=\"interface_stats.if_name\" WHERE device =~ /^$device/",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb_fluentd",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "ae_name",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "ae0",
+            "value": "ae0"
+          },
+          {
+            "selected": false,
+            "text": "ae1",
+            "value": "ae1"
+          },
+          {
+            "selected": false,
+            "text": "ae2",
+            "value": "ae2"
+          },
+          {
+            "selected": false,
+            "text": "ae3",
+            "value": "ae3"
+          },
+          {
+            "selected": false,
+            "text": "ae4",
+            "value": "ae4"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"juniperNetworks.jnpr_interface_ext\" with KEY=\"interface_stats.parent_ae_name\" WHERE device =~ /^$device/",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb_fluentd",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "queue",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "0",
+            "value": "0"
+          },
+          {
+            "selected": false,
+            "text": "1",
+            "value": "1"
+          },
+          {
+            "selected": false,
+            "text": "2",
+            "value": "2"
+          },
+          {
+            "selected": false,
+            "text": "3",
+            "value": "3"
+          },
+          {
+            "selected": false,
+            "text": "4",
+            "value": "4"
+          },
+          {
+            "selected": false,
+            "text": "5",
+            "value": "5"
+          },
+          {
+            "selected": false,
+            "text": "6",
+            "value": "6"
+          },
+          {
+            "selected": false,
+            "text": "7",
+            "value": "7"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"juniperNetworks.jnpr_interface_ext\" with KEY=\"interface_stats.egress_queue_info.queue_number\" WHERE device =~ /^$device/",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "JTI-UDP-INTERFACES-fluentd",
+  "uid": "5Mt2LABiz",
+  "version": 6
+}
+

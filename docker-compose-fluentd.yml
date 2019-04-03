@@ -1,0 +1,111 @@
+version: '3.3'
+
+services:
+
+  jti_openconfig_fluentd:
+    build: ./inputs/fluentd/image
+    container_name: jti_openConfig
+    depends_on:
+      - influxdb
+    ports:
+      - "50051:50051/tcp"
+    env_file:
+      - 'inputs/fluentd/jti_openConfig/data/env.jti_openConfig'
+    volumes:
+      - ./inputs/fluentd/jti_openConfig/data:/var/tmp/data
+      - ./inputs/fluentd/jti_openConfig/templates:/var/tmp/templates
+    links:
+      - influxdb
+  
+  jti_udp_native_fluentd:
+    build: ./inputs/fluentd/image
+    container_name: jti_udpNative
+    depends_on:
+      - influxdb
+    ports:
+      - "50000:50000/udp"
+    env_file:
+      - 'inputs/fluentd/jti_udpNative/data/env.jti_udpNative'
+    volumes:
+      - ./inputs/fluentd/jti_udpNative/data:/var/tmp/data
+      - ./inputs/fluentd/jti_udpNative/templates:/var/tmp/templates
+    links:
+      - influxdb
+
+  input-netflow-fluentd:
+    build: ./inputs/fluentd/image
+    container_name: input-netflow-fluentd
+    depends_on:
+      - influxdb
+    ports:
+      - "2055:2055/udp"
+    env_file:
+      - 'inputs/fluentd/input-netflow/data/env.input_netflow'
+    volumes:
+      - ./inputs/fluentd/input-netflow/data:/var/tmp/data
+      - ./inputs/fluentd/input-netflow/templates:/var/tmp/templates
+    links:
+      - influxdb
+  
+  influxdb:
+    image: influxdb:1.6.4
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+      - "8090:8090"
+    volumes:
+      - influxdb_data_fluentd:/var/lib/influxdb
+      - ./outputs/influxdb/image/config/influxdb.sh:/docker-entrypoint-initdb.d/influxdb.sh
+
+  chronograf:
+    image: quay.io/influxdb/chronograf:1.5.0.1
+    container_name: chronograf
+    environment:
+      INFLUXDB_URL: http://influxdb:8086/
+      KAPACITOR_URL: http://kapacitor:9092/
+    ports:
+      - "8888:8888"
+    links:
+      - influxdb
+      - kapacitor
+
+  kapacitor:
+    image: kapacitor:1.5.0
+    container_name: kapacitor
+    environment:
+      KAPACITOR_HOSTNAME: kapacitor
+      KAPACITOR_INFLUXDB_0_URLS_0: http://influxdb:8086/
+    ports:
+      - "9092:9092"
+    links:
+      - influxdb
+
+  grafana:
+    image: grafana/grafana:5.3.2
+    container_name: grafana
+    environment:
+      GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./web_ui/grafana/dashboards/fluentd:/var/tmp
+      - ./web_ui/grafana/image/config/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml
+      - ./web_ui/grafana/image/config/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 10.49.232.211 
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "jti-udp-native-fluentd:1:1,jti-oc:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  influxdb_data_fluentd:

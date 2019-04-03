@@ -1,0 +1,60 @@
+    {%- for env in envs -%}
+    input {
+        udp {
+            port => {{ env.port}}
+            codec => juniper-udp-native-sensors {
+            }
+        }
+    }
+
+    #filter {
+    #    {%-  for sensor in sensors %}
+    #        if [sensor_name] == "{{ sensor.name }}" {
+    #            mutate {
+    #                add_tag => {{ sensor.tag_keys | tojson()}}
+    #        }   
+    #    }
+    #    {%-  endfor %}
+    #}
+    
+    output {
+    {% if env.output_stdout == True %}
+    stdout {
+            codec => "rubydebug"
+        }
+    {%- endif %}
+    {% if env.output_influxdb == True %}
+        {%-  for sensor in sensors %}
+         if [sensor_name] == "{{ sensor.name }}" {  
+        influxdb {
+            db => "{{ environ('INFLUXDB_DB') }}"
+            retention_policy => "four_weeks"
+            host => "influxdb"
+            port => 8086    
+            user => "juniper"
+            password => "juniper"
+            allow_time_override => true
+            use_event_fields_for_data_points => true
+            measurement => "{{ sensor.name }}"
+            send_as_tags => {{ sensor.tag_keys | tojson()}}
+        }
+        }
+
+         {%-  endfor %}
+    {%- endif %}
+    {% if env.output_kafka == True %}
+      kafka {
+        codec => json
+        topic_id => "logstash-jti-udp"
+        bootstrap_servers => ["kafka:9092"]
+      }
+    {%- endif -%}
+
+    {% if env.ouput_elastic == True %}
+        elasticsearch {
+            hosts => [ "elasticsearch:9200" ]
+            index => "jti-logstash-udp-%{+YYYY-MM-dd_HH}"
+        }
+    {%- endif -%}
+    }
+    {%- endfor %}

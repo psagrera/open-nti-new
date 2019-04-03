@@ -1,0 +1,941 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 4,
+  "iteration": 1542728595987,
+  "links": [],
+  "panels": [
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "elasticsearch",
+      "fill": 1,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "percentage": false,
+      "pointradius": 0.5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "fake": true,
+              "field": "device.keyword",
+              "id": "4",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "fake": true,
+              "field": "interface_stats.if_name.keyword",
+              "id": "6",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "fake": true,
+              "field": "interface_stats.parent_ae_name.keyword",
+              "id": "3",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "10s",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "interface_stats.ingress_stats.if_1sec_pkts",
+              "id": "1",
+              "meta": {},
+              "pipelineAgg": "select metric",
+              "settings": {},
+              "type": "avg"
+            },
+            {
+              "field": "1",
+              "id": "5",
+              "meta": {},
+              "pipelineAgg": "1",
+              "settings": {},
+              "type": "derivative"
+            }
+          ],
+          "query": "device.keyword:$device  AND interface_stats.if_name.keyword:$if_name AND interface_stats.parent_ae_name.keyword:$ae_name",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Interfaces - INPUT pps (AE per member)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "pps",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "elasticsearch",
+      "fill": 1,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 6,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "percentage": false,
+      "pointradius": 0.5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "fake": true,
+              "field": "interface_stats.if_name.keyword",
+              "id": "5",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "fake": true,
+              "field": "device.keyword",
+              "id": "4",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "10s",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "interface_stats.ingress_stats.if_1sec_pkts",
+              "id": "1",
+              "meta": {},
+              "settings": {},
+              "type": "avg"
+            },
+            {
+              "field": "1",
+              "id": "3",
+              "meta": {},
+              "pipelineAgg": "1",
+              "settings": {},
+              "type": "derivative"
+            }
+          ],
+          "query": "device.keyword:$device  AND interface_stats.if_name.keyword:$if_name",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Interfaces - INPUT - pps",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "pps",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "elasticsearch",
+      "fill": 1,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 4,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "percentage": false,
+      "pointradius": 0.5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "fake": true,
+              "field": "interface_stats.if_name.keyword",
+              "id": "5",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "fake": true,
+              "field": "interface_stats.parent_ae_name.keyword",
+              "id": "6",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "fake": true,
+              "field": "device.keyword",
+              "id": "4",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "interface_stats.egress_stats.if_1sec_pkts",
+              "id": "1",
+              "meta": {},
+              "settings": {},
+              "type": "avg"
+            },
+            {
+              "field": "1",
+              "id": "3",
+              "meta": {},
+              "pipelineAgg": "1",
+              "settings": {},
+              "type": "derivative"
+            }
+          ],
+          "query": "device.keyword:$device  AND interface_stats.if_name.keyword:$if_name AND interface_stats.parent_ae_name.keyword:$ae_name",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Interfaces - OUTPUT - pps (AE per member)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "pps",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "elasticsearch",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 8,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "percentage": false,
+      "pointradius": 0.5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "fake": true,
+              "field": "interface_stats.if_name.keyword",
+              "id": "5",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "fake": true,
+              "field": "device.keyword",
+              "id": "4",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "10s",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "interface_stats.egress_stats.if_1sec_pkts",
+              "id": "1",
+              "meta": {},
+              "settings": {},
+              "type": "avg"
+            },
+            {
+              "field": "1",
+              "id": "3",
+              "meta": {},
+              "pipelineAgg": "1",
+              "settings": {},
+              "type": "derivative"
+            }
+          ],
+          "query": "device.keyword:$device  AND interface_stats.if_name.keyword:$if_name",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Interfaces - OUTPUT pps",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "pps",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "text": "mx1_re:10.235.1.2",
+          "value": "mx1_re:10.235.1.2"
+        },
+        "datasource": "elasticsearch",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "device",
+        "options": [
+          {
+            "selected": false,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": true,
+            "text": "mx1_re:10.235.1.2",
+            "value": "mx1_re:10.235.1.2"
+          }
+        ],
+        "query": "{\"find\": \"terms\", \"field\": \"device.keyword\"}",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "elasticsearch",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "if_name",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/0",
+            "value": "ge-0/0/0"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/1",
+            "value": "ge-0/0/1"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/2",
+            "value": "ge-0/0/2"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/3",
+            "value": "ge-0/0/3"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/4",
+            "value": "ge-0/0/4"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/5",
+            "value": "ge-0/0/5"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/6",
+            "value": "ge-0/0/6"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/7",
+            "value": "ge-0/0/7"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/8",
+            "value": "ge-0/0/8"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/0/9",
+            "value": "ge-0/0/9"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/1/0",
+            "value": "ge-0/1/0"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/1/1",
+            "value": "ge-0/1/1"
+          },
+          {
+            "selected": false,
+            "text": "ge-0/1/2",
+            "value": "ge-0/1/2"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/0",
+            "value": "ge-1/0/0"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/1",
+            "value": "ge-1/0/1"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/2",
+            "value": "ge-1/0/2"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/3",
+            "value": "ge-1/0/3"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/4",
+            "value": "ge-1/0/4"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/5",
+            "value": "ge-1/0/5"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/6",
+            "value": "ge-1/0/6"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/7",
+            "value": "ge-1/0/7"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/8",
+            "value": "ge-1/0/8"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/0/9",
+            "value": "ge-1/0/9"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/0",
+            "value": "ge-1/1/0"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/1",
+            "value": "ge-1/1/1"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/2",
+            "value": "ge-1/1/2"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/3",
+            "value": "ge-1/1/3"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/4",
+            "value": "ge-1/1/4"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/5",
+            "value": "ge-1/1/5"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/6",
+            "value": "ge-1/1/6"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/7",
+            "value": "ge-1/1/7"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/8",
+            "value": "ge-1/1/8"
+          },
+          {
+            "selected": false,
+            "text": "ge-1/1/9",
+            "value": "ge-1/1/9"
+          },
+          {
+            "selected": false,
+            "text": "xe-1/2/0",
+            "value": "xe-1/2/0"
+          },
+          {
+            "selected": false,
+            "text": "xe-1/2/1",
+            "value": "xe-1/2/1"
+          },
+          {
+            "selected": false,
+            "text": "xe-1/3/0",
+            "value": "xe-1/3/0"
+          },
+          {
+            "selected": false,
+            "text": "xe-1/3/1",
+            "value": "xe-1/3/1"
+          }
+        ],
+        "query": "{\"find\": \"terms\", \"field\": \"interface_stats.if_name.keyword\", \"query\": \"device.keyword:$device\"}",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "elasticsearch",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "ae_name",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "ae0",
+            "value": "ae0"
+          },
+          {
+            "selected": false,
+            "text": "ae1",
+            "value": "ae1"
+          },
+          {
+            "selected": false,
+            "text": "ae2",
+            "value": "ae2"
+          },
+          {
+            "selected": false,
+            "text": "ae3",
+            "value": "ae3"
+          },
+          {
+            "selected": false,
+            "text": "ae4",
+            "value": "ae4"
+          }
+        ],
+        "query": "{\"find\": \"terms\", \"field\": \"interface_stats.parent_ae_name.keyword\", \"query\": \"device.keyword:$device\"}",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "JTI-UDP-Interfaces-logstash-elastic",
+  "uid": "4Dl7auBiz",
+  "version": 7
+}

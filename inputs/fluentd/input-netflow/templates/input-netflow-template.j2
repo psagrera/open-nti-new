@@ -1,0 +1,44 @@
+<source>
+  @type  netflow
+  tag netflow.event
+  bind 0.0.0.0
+  {%- for env in envs %}
+  port {{ env.port}}
+  switched_times_from_uptime yes
+</source>
+<match netflow.event>
+type copy
+{% if env.output_influxdb == True %}
+<store>
+    type influxdb
+    host "{{ environ('INFLUXDB_HOSTNAME') }}"
+    port {{ environ('INFLUXDB_PORT') }}
+    dbname "{{ environ('INFLUXDB_DB') }}"
+    user "{{ environ('INFLUXDB_USER') }}"
+    password "{{ environ('INFLUXDB_USER_PASSWORD') }}"
+    use_ssl false
+    time_precision ms
+    tag_keys ["host"]
+    tag_keys_field key_fields
+    sequence_tag _seq
+</store>
+{%- endif %}
+{% if env.output_kafka == True %}
+    <store>
+      @type kafka
+      # Brokers: you can choose either brokers or zookeeper.
+      brokers               {{ environ('KAFKA_ADDR') }}:{{ environ('KAFKA_PORT') }}
+      # zookeeper           <zookeeper_host>:<zookeeper_port> # Set brokers via Zookeeper
+      default_topic         {{ environ('KAFKA_TOPIC') }}
+      # default_partition_key (string)   :default => nil
+      output_data_type      {{ environ('KAFKA_DATA_TYPE') }} # |ltsv|msgpack|attr:<record name>|<formatter name>)
+      output_include_tag    true # |false) :default => false
+      output_include_time   true # |false) :default => false
+      # max_send_retries    (integer)    :default => 3
+      # required_acks       (integer)    :default => 0
+      # ack_timeout_ms      (integer)    :default => 1500
+      compression_codec     {{ environ('KAFKA_COMPRESSION_CODEC') }} 
+    </store>
+{%- endif -%}
+{%-  endfor %}
+</match>

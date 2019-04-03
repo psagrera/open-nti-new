@@ -1,0 +1,90 @@
+datasources:
+- name: influxdb_fluentd
+  type: influxdb
+  access: proxy
+  orgId: 1
+  url: http://influxdb:8086
+  password: juniper
+  user: juniper
+  database: jfluentd
+  basicAuth: false
+  basicAuthUser:
+  basicAuthPassword:
+  withCredentials:
+  isDefault: true
+  editable: true
+
+- name: influxdb_logstash
+  type: influxdb
+  access: proxy
+  orgId: 1
+  url: http://influxdb:8086
+  password: juniper
+  user: juniper
+  database: jlogstash
+  basicAuth: false
+  basicAuthUser:
+  basicAuthPassword:
+  withCredentials:
+  isDefault: false
+  editable: true
+
+- name: influxdb_telegraf
+  type: influxdb
+  access: proxy
+  orgId: 1
+  url: http://influxdb:8086
+  password: juniper
+  user: juniper
+  database: juniper
+  basicAuth: false
+  basicAuthUser:
+  basicAuthPassword:
+  withCredentials:
+  isDefault: false
+  editable: true
+
+- name: docker_internal
+  type: influxdb
+  access: proxy
+  orgId: 1
+  url: http://influxdb:8086
+  password: juniper
+  user: juniper
+  database: docker_internal
+  basicAuth: false
+  basicAuthUser:
+  basicAuthPassword:
+  withCredentials:
+  isDefault: false
+  editable: true
+
+- name: influxdb_internal
+  type: influxdb
+  access: proxy
+  orgId: 1
+  url: http://influxdb:8086
+  password: juniper
+  user: juniper
+  database: _internal
+  basicAuth: false
+  basicAuthUser:
+  basicAuthPassword:
+  withCredentials:
+  isDefault: false
+  editable: true
+
+- name: snmp
+  type: influxdb
+  access: proxy
+  orgId: 1
+  url: http://influxdb:8086
+  password: juniper
+  user: juniper
+  database: snmp
+  basicAuth: false
+  basicAuthUser:
+  basicAuthPassword:
+  withCredentials:
+  isDefault: false
+  editable: true

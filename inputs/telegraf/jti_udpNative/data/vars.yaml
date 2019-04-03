@@ -1,0 +1,9 @@
+tag_keys:
+  # Generic
+  - "device"
+  # FPC CPU
+  - "utilization.application_utilization.name"
+  - "utilization.name"
+  # INTERFACES
+  - "interface_stats.if_name"
+  - "interface_stats.parent_ae_name"

@@ -1,0 +1,26 @@
+parser:
+    regex-command: show\s+ldp\s+statistics\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //*[local-name() = 'ldp-statistics']/*[local-name() = 'ldp-message-statistics']
+        loop:
+            key: ./*[local-name() = 'ldp-message-type']
+            sub-matches:
+            -
+                xpath: ./ldp-messages-sent
+                variable-name:  $host.protocols.ldp.statistics.$key.ldp-messages-sent
+            -
+                xpath: ./ldp-messages-received
+                variable-name:  $host.protocols.ldp.statistics.$key.ldp-messages-received
+    -
+        type: multi-value
+        method: xpath
+        xpath: //*[local-name() = 'ldp-statistics']/*[local-name() = 'ldp-event-statistics']
+        loop:
+            key: ./*[local-name() = 'ldp-event-type']
+            sub-matches:
+            -
+                xpath: ./ldp-event-count
+                variable-name:  $host.protocols.ldp.statistics.$key.ldp-event-count

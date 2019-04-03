@@ -1,0 +1,861 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 4,
+  "iteration": 1544526520569,
+  "links": [],
+  "panels": [
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "influxdb_telegraf",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 10,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "percentage": false,
+      "pointradius": 0.5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "[[tag_device]]--[[tag_utilization.application_utilization.name]]",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(\"utilization.application_utilization.frees\"), 1s) FROM \"juniperNetworks.cpu_memory_util_ext\" WHERE \"device\" =~ /^$device/ AND \"utilization.application_utilization.name\" =~ /^$app_name$/ AND $timeFilter GROUP BY time($__interval), \"device\", \"utilization.application_utilization.name\" fill(null)\n",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "CPU / Memory - frees per application (delta)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "influxdb_telegraf",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 4,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "percentage": false,
+      "pointradius": 0.5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "[[tag_device]]-[[tag_utilization.application_utilization.name]]",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(\"utilization.application_utilization.allocations\"), 1s) FROM \"juniperNetworks.cpu_memory_util_ext\" WHERE \"device\" =~ /^$device/ AND \"utilization.application_utilization.name\" =~ /^$app_name$/ AND $timeFilter GROUP BY time($__interval), \"device\", \"utilization.application_utilization.name\" fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "CPU / Memory Allocations per application (delta)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "influxdb_telegraf",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 9
+      },
+      "id": 8,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 0.5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "[[tag_device]]--[[tag_utilization.application_utilization.name]]",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(\"utilization.application_utilization.bytes_allocated\"), 1s)*8 FROM \"juniperNetworks.cpu_memory_util_ext\" WHERE \"device\" =~ /^$device/ AND \"utilization.application_utilization.name\" =~ /^$app_name$/ AND $timeFilter GROUP BY time($__interval), \"device\", \"utilization.application_utilization.name\" fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "CPU / Memory - Bytes allocated per application(delta)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "influxdb_telegraf",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 6,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "percentage": false,
+      "pointradius": 0.5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "[[tag_device]]--[[tag_utilization.name]]",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(\"utilization.bytes_allocated\"), 1s)*8 FROM \"juniperNetworks.cpu_memory_util_ext\" WHERE \"device\" =~ /^$device/ AND \"utilization.name\" =~ /^$u_name$/ AND $timeFilter GROUP BY time($__interval), \"device\", \"utilization.name\" fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "CPU / Memory Bytes allocated Global - Kernel  (delta)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": [
+    "jti",
+    "UDP",
+    "telegraf"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb_telegraf",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "device",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "mx1_re:10.235.1.2",
+            "value": "mx1_re:10.235.1.2"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"juniperNetworks.cpu_memory_util_ext\" WITH KEY = \"device\"",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb_telegraf",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "u_name",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "Kernel",
+            "value": "Kernel"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"juniperNetworks.cpu_memory_util_ext\" WITH KEY = \"utilization.name\" WHERE \"device\" =~/$device/",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb_telegraf",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "app_name",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "802-1br",
+            "value": "802-1br"
+          },
+          {
+            "selected": false,
+            "text": "agent",
+            "value": "agent"
+          },
+          {
+            "selected": false,
+            "text": "class",
+            "value": "class"
+          },
+          {
+            "selected": false,
+            "text": "cos",
+            "value": "cos"
+          },
+          {
+            "selected": false,
+            "text": "cos-halp",
+            "value": "cos-halp"
+          },
+          {
+            "selected": false,
+            "text": "counters",
+            "value": "counters"
+          },
+          {
+            "selected": false,
+            "text": "features bd_e",
+            "value": "features bd_e"
+          },
+          {
+            "selected": false,
+            "text": "features default",
+            "value": "features default"
+          },
+          {
+            "selected": false,
+            "text": "features exception",
+            "value": "features exception"
+          },
+          {
+            "selected": false,
+            "text": "features iff",
+            "value": "features iff"
+          },
+          {
+            "selected": false,
+            "text": "features iif",
+            "value": "features iif"
+          },
+          {
+            "selected": false,
+            "text": "features ktree",
+            "value": "features ktree"
+          },
+          {
+            "selected": false,
+            "text": "features nh",
+            "value": "features nh"
+          },
+          {
+            "selected": false,
+            "text": "features nh ingress",
+            "value": "features nh ingress"
+          },
+          {
+            "selected": false,
+            "text": "features off",
+            "value": "features off"
+          },
+          {
+            "selected": false,
+            "text": "features oif",
+            "value": "features oif"
+          },
+          {
+            "selected": false,
+            "text": "features stream",
+            "value": "features stream"
+          },
+          {
+            "selected": false,
+            "text": "filter",
+            "value": "filter"
+          },
+          {
+            "selected": false,
+            "text": "filter-halp",
+            "value": "filter-halp"
+          },
+          {
+            "selected": false,
+            "text": "hash",
+            "value": "hash"
+          },
+          {
+            "selected": false,
+            "text": "ifd",
+            "value": "ifd"
+          },
+          {
+            "selected": false,
+            "text": "ifd-halp",
+            "value": "ifd-halp"
+          },
+          {
+            "selected": false,
+            "text": "iff",
+            "value": "iff"
+          },
+          {
+            "selected": false,
+            "text": "iff-halp",
+            "value": "iff-halp"
+          },
+          {
+            "selected": false,
+            "text": "ifl",
+            "value": "ifl"
+          },
+          {
+            "selected": false,
+            "text": "ifl-halp",
+            "value": "ifl-halp"
+          },
+          {
+            "selected": false,
+            "text": "iftable",
+            "value": "iftable"
+          },
+          {
+            "selected": false,
+            "text": "igmp",
+            "value": "igmp"
+          },
+          {
+            "selected": false,
+            "text": "inline ka",
+            "value": "inline ka"
+          },
+          {
+            "selected": false,
+            "text": "ipsec",
+            "value": "ipsec"
+          },
+          {
+            "selected": false,
+            "text": "ktree",
+            "value": "ktree"
+          },
+          {
+            "selected": false,
+            "text": "l2-halp",
+            "value": "l2-halp"
+          },
+          {
+            "selected": false,
+            "text": "l2pd-ifd",
+            "value": "l2pd-ifd"
+          },
+          {
+            "selected": false,
+            "text": "l2pfd-ifl",
+            "value": "l2pfd-ifl"
+          },
+          {
+            "selected": false,
+            "text": "nh",
+            "value": "nh"
+          },
+          {
+            "selected": false,
+            "text": "nh-halp",
+            "value": "nh-halp"
+          },
+          {
+            "selected": false,
+            "text": "pppoe",
+            "value": "pppoe"
+          },
+          {
+            "selected": false,
+            "text": "rt",
+            "value": "rt"
+          },
+          {
+            "selected": false,
+            "text": "rt-halp",
+            "value": "rt-halp"
+          },
+          {
+            "selected": false,
+            "text": "rt-mac",
+            "value": "rt-mac"
+          },
+          {
+            "selected": false,
+            "text": "rtt",
+            "value": "rtt"
+          },
+          {
+            "selected": false,
+            "text": "table",
+            "value": "table"
+          },
+          {
+            "selected": false,
+            "text": "toe-lu-stats",
+            "value": "toe-lu-stats"
+          },
+          {
+            "selected": false,
+            "text": "vbf",
+            "value": "vbf"
+          },
+          {
+            "selected": false,
+            "text": "vbf-halp",
+            "value": "vbf-halp"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"juniperNetworks.cpu_memory_util_ext\" WITH KEY = \"utilization.application_utilization.name\" WHERE \"device\" =~ /$device/",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "JTI-UDP-FPC-CPU-telegraf",
+  "uid": "BFue8Afmz",
+  "version": 1
+}

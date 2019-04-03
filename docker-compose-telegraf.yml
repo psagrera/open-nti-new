@@ -1,0 +1,232 @@
+version: '3.3'
+
+services:
+
+  jti_udp_telegraf:
+    build: ./inputs/telegraf/image
+    container_name: jti_udpNative_telegraf
+    environment:
+     - "TELEGRAF_AGENT_INTERVAL_SECONDS=30"
+     - "TELEGRAF_AGENT_FLUSH_INTERVAL=30s"
+     - "TELEGRAF_AGENT_FLUSH_JITTER=0s"
+     - "TELEGRAF_AGENT_DEBUG=false"
+     - "TELEGRAF_AGENT_HOSTNAME=open-nti"
+     - "TELEGRAF_AGENT_METRIC_BATCH_SIZE=1000"
+     - "TELEGRAF_AGENT_METRIC_BUFFER_LIMIT=100000"
+     - "TELEGRAF_AGENT_COLLECTION_JITTER=1s"
+     - "INFLUXDB_DB_ENABLED=true"
+     - "INFLUXDB_ADDRESS=influxdb"
+     - "INFLUXDB_PORT=8086"
+     - "INFLUXDB_DB_NAME=juniper"
+     - "INFLUXDB_DB_TIMEOUT=5s"
+     - "INFLUXDB_DB_USER=juniper"
+     - "INFLUXDB_DB_PASSWD=juniper"
+     - "TAGS=true"
+    ports:
+      - "50000:50000/udp"
+    volumes:
+      - ./inputs/telegraf/jti_udpNative/data:/source/data
+      - ./inputs/telegraf/jti_udpNative/templates:/source/templates
+    links:
+      - influxdb
+
+  jti_openconfig_telegraf:
+    build: ./inputs/telegraf/image
+    container_name: jti_openConfig_telegraf
+    environment:
+     - "TELEGRAF_AGENT_INTERVAL_SECONDS=30"
+     - "TELEGRAF_AGENT_FLUSH_INTERVAL=30s"
+     - "TELEGRAF_AGENT_FLUSH_JITTER=0s"
+     - "TELEGRAF_AGENT_DEBUG=false"
+     - "TELEGRAF_AGENT_HOSTNAME=open-nti"
+     - "TELEGRAF_AGENT_METRIC_BATCH_SIZE=1000"
+     - "TELEGRAF_AGENT_METRIC_BUFFER_LIMIT=100000"
+     - "TELEGRAF_AGENT_COLLECTION_JITTER=1s"
+     - "INFLUXDB_DB_ENABLED=true"
+     - "INFLUXDB_ADDRESS=influxdb"
+     - "INFLUXDB_PORT=8086"
+     - "INFLUXDB_DB_NAME=juniper"
+     - "INFLUXDB_DB_TIMEOUT=5s"
+     - "INFLUXDB_DB_USER=juniper"
+     - "INFLUXDB_DB_PASSWD=juniper"
+     - "TAGS=true"
+    ports:
+      - "50051:50051/tcp"
+    volumes:
+      - ./inputs/telegraf/jti_openConfig/data:/source/data
+      - ./inputs/telegraf/jti_openConfig/templates:/source/templates
+    links:
+      - influxdb
+
+  input-netflow-telegraf:
+    build: ./inputs/telegraf/image
+    container_name: input-netflow-telegraf
+    environment:
+     - "TELEGRAF_AGENT_INTERVAL_SECONDS=30"
+     - "TELEGRAF_AGENT_FLUSH_INTERVAL=30s"
+     - "TELEGRAF_AGENT_FLUSH_JITTER=0s"
+     - "TELEGRAF_AGENT_DEBUG=false"
+     - "TELEGRAF_AGENT_HOSTNAME=open-nti"
+     - "TELEGRAF_AGENT_METRIC_BATCH_SIZE=1000"
+     - "TELEGRAF_AGENT_METRIC_BUFFER_LIMIT=100000"
+     - "TELEGRAF_AGENT_COLLECTION_JITTER=1s"
+     - "INFLUXDB_DB_ENABLED=true"
+     - "INFLUXDB_ADDRESS=influxdb"
+     - "INFLUXDB_PORT=8086"
+     - "INFLUXDB_DB_NAME=juniper"
+     - "INFLUXDB_DB_TIMEOUT=5s"
+     - "INFLUXDB_DB_USER=juniper"
+     - "INFLUXDB_DB_PASSWD=juniper"
+     - "TAGS=true"
+    ports:
+      - "2055:2055/udp"
+    volumes:
+      - ./inputs/telegraf/input-netflow/data:/source/data
+      - ./inputs/telegraf/input-netflow/templates:/source/templates
+    links:
+      - influxdb
+  
+  input-snmp:
+    build: ./inputs/telegraf/image
+    container_name: input-snmp
+    environment:
+     - "TELEGRAF_AGENT_INTERVAL_SECONDS=30"
+     - "TELEGRAF_AGENT_FLUSH_INTERVAL=30s"
+     - "TELEGRAF_AGENT_FLUSH_JITTER=0s"
+     - "TELEGRAF_AGENT_DEBUG=true"
+     - "TELEGRAF_AGENT_HOSTNAME=open-nti"
+     - "TELEGRAF_AGENT_METRIC_BATCH_SIZE=1000"
+     - "TELEGRAF_AGENT_METRIC_BUFFER_LIMIT=100000"
+     - "TELEGRAF_AGENT_COLLECTION_JITTER=1s"
+     - "INFLUXDB_DB_ENABLED=true"
+     - "INFLUXDB_ADDRESS=influxdb"
+     - "INFLUXDB_PORT=8086"
+     - "INFLUXDB_DB_NAME=snmp"
+     - "INFLUXDB_DB_TIMEOUT=5s"
+     - "INFLUXDB_DB_USER=juniper"
+     - "INFLUXDB_DB_PASSWD=juniper"
+     - "TAGS=true"
+    ports:
+     - "162:162/udp"
+    volumes:
+     #- /etc/localtime:/etc/localtime:ro
+     - ./inputs/telegraf/input-snmp/templates:/source/templates
+     - ./inputs/telegraf/input-snmp/data:/source/data
+     - ./inputs/telegraf/input-snmp/logs:/source/logs
+    links:
+     - influxdb
+  
+  input-netconf:
+    build: ./inputs/telegraf/image
+    container_name: input-netconf
+    environment:
+     - "TELEGRAF_AGENT_INTERVAL_SECONDS=600"
+     - "TELEGRAF_AGENT_FLUSH_INTERVAL=30s"
+     - "TELEGRAF_AGENT_FLUSH_JITTER=0s"
+     - "TELEGRAF_AGENT_DEBUG=true"
+     - "TELEGRAF_AGENT_HOSTNAME=open-nti"
+     - "TELEGRAF_AGENT_METRIC_BATCH_SIZE=1000"
+     - "TELEGRAF_AGENT_METRIC_BUFFER_LIMIT=100000"
+     - "TELEGRAF_AGENT_COLLECTION_JITTER=1s"
+     - "TELEGRAF_EXEC_TIMEOUT_SECONDS=600"
+     - "INFLUXDB_DB_ENABLED=true"
+     - "INFLUXDB_ADDRESS=influxdb"
+     - "INFLUXDB_PORT=8086"
+     - "INFLUXDB_DB_NAME=juniper"
+     - "INFLUXDB_DB_TIMEOUT=5s"
+     - "INFLUXDB_DB_USER=juniper"
+     - "INFLUXDB_DB_PASSWD=juniper"
+     - "TAGS=true"
+    volumes:
+     #- /etc/localtime:/etc/localtime:ro
+     - ./inputs/telegraf/input-netconf/templates:/source/templates
+     - ./inputs/telegraf/input-netconf/data:/source/data
+     - ./inputs/telegraf/input-netconf/logs:/source/logs
+    links:
+     - influxdb
+  
+  input-internal:
+    build: ./inputs/telegraf/image
+    container_name: input-internal
+    environment:
+     - "TELEGRAF_AGENT_INTERVAL_SECONDS=10"
+     - "TELEGRAF_AGENT_FLUSH_INTERVAL=30s"
+     - "TELEGRAF_AGENT_FLUSH_JITTER=0s"
+     - "TELEGRAF_AGENT_DEBUG=true"
+     - "TELEGRAF_AGENT_HOSTNAME=open-nti"
+     - "TELEGRAF_AGENT_METRIC_BATCH_SIZE=1000"
+     - "TELEGRAF_AGENT_METRIC_BUFFER_LIMIT=100000"
+     - "TELEGRAF_AGENT_COLLECTION_JITTER=1s"
+     - "INFLUXDB_DB_ENABLED=true"
+     - "INFLUXDB_ADDRESS=influxdb"
+     - "INFLUXDB_PORT=8086"
+     - "INFLUXDB_DB_NAME=docker_internal"
+     - "INFLUXDB_DB_TIMEOUT=5s"
+     - "INFLUXDB_DB_USER=juniper"
+     - "INFLUXDB_DB_PASSWD=juniper"
+     - "TAGS=true"
+     - "HOST_PROC=/rootfs/proc"
+     - "HOST_SYS=/rootfs/sys"
+     - "HOST_ETC=/rootfs/etc"
+    volumes:
+     #- /etc/localtime:/etc/localtime:ro
+     - /var/run/docker.sock:/var/run/docker.sock:ro
+     - /sys:/rootfs/sys:ro
+     - /proc:/rootfs/proc:ro
+     - /etc:/rootfs/etc:ro
+     - ./inputs/telegraf/input-internal/templates:/source/templates
+     - ./inputs/telegraf/input-internal/data:/source/data
+     - ./inputs/telegraf/input-internal/logs:/source/logs
+    links:
+     - influxdb
+
+  influxdb:
+    image: influxdb:1.6.4
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+      - "8090:8090"
+    volumes:
+      - influxdb_data_telegraf:/var/lib/influxdb
+      - ./outputs/influxdb/image/config/influxdb.sh:/docker-entrypoint-initdb.d/influxdb.sh
+
+  chronograf:
+    image: quay.io/influxdb/chronograf:1.5.0.1
+    container_name: chronograf
+    environment:
+      INFLUXDB_URL: http://influxdb:8086/
+      KAPACITOR_URL: http://kapacitor:9092/
+    ports:
+      - "8888:8888"
+    links:
+      - influxdb
+      - kapacitor
+
+  kapacitor:
+    image: kapacitor:1.5.0
+    container_name: kapacitor
+    environment:
+      KAPACITOR_HOSTNAME: kapacitor
+      KAPACITOR_INFLUXDB_0_URLS_0: http://influxdb:8086/
+    ports:
+      - "9092:9092"
+    links:
+      - influxdb
+
+  grafana:
+    image: grafana/grafana:5.3.2
+    container_name: grafana
+    environment:
+      GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./web_ui/grafana/dashboards/telegraf:/var/tmp
+      - ./web_ui/grafana/image/config/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml
+      - ./web_ui/grafana/image/config/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+
+
+volumes:
+  influxdb_data_telegraf:
+
+

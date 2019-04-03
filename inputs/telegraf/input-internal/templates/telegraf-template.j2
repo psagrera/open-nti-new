@@ -1,0 +1,29 @@
+[agent]
+  interval = "{{ environ('TELEGRAF_AGENT_INTERVAL_SECONDS') }}s"
+  round_interval = true
+  flush_interval =  "{{ environ('TELEGRAF_AGENT_FLUSH_INTERVAL') }}"
+  flush_jitter =  "{{ environ('TELEGRAF_AGENT_FLUSH_JITTER') }}"
+  debug = {{ environ('TELEGRAF_AGENT_DEBUG') }}
+  hostname = "{{ environ('TELEGRAF_AGENT_HOSTNAME') }}"
+  metric_batch_size = {{ environ('TELEGRAF_AGENT_METRIC_BATCH_SIZE') }}
+  metric_buffer_limit = {{ environ('TELEGRAF_AGENT_METRIC_BUFFER_LIMIT') }}
+  collection_jitter = "{{ environ('TELEGRAF_AGENT_COLLECTION_JITTER') }}"
+
+[[outputs.influxdb]]
+  urls = ["http://{{ environ('INFLUXDB_ADDRESS') }}:{{ environ('INFLUXDB_PORT') }}"]
+  database = "{{ environ('INFLUXDB_DB_NAME') }}"
+  precision = "s"
+  retention_policy = ""
+  timeout = "{{ environ('INFLUXDB_DB_TIMEOUT') }}"
+  username = "{{ environ('INFLUXDB_DB_USER') }}"
+  password = "{{ environ('INFLUXDB_DB_PASSWD') }}"
+
+[[inputs.docker]]
+  # Docker Endpoint
+  #   To use TCP, set endpoint = "tcp://[ip]:[port]"
+  #   To use environment variables (ie, docker-machine), set endpoint = "ENV"
+  endpoint = "unix:///var/run/docker.sock"
+  # Only collect metrics for these containers, collect all if empty
+  container_names = []
+
+

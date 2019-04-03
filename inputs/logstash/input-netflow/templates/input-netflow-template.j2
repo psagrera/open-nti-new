@@ -1,0 +1,25 @@
+{%- for env in envs -%}
+input {
+  udp {
+    port                 => {{ env.port}}
+    codec                => netflow
+    receive_buffer_bytes => 16777216
+    workers              => 16
+  }
+}
+output {
+{% if env.output_kafka == True %}
+      kafka {
+        codec => json
+        topic_id => "logstash-netflow"
+        bootstrap_servers => ["kafka:9092"]
+      }
+    {%- endif -%}
+{% if env.ouput_elastic == True %}
+    elasticsearch {
+        hosts => [ "elasticsearch:9200" ]
+        index => "input-netflow-%{+YYYY-MM-dd_HH}"
+    }
+ {%- endif -%}
+ }
+{%- endfor %}

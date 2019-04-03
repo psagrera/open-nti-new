@@ -1,0 +1,20 @@
+groups:
+  - mx960:
+    hosts:
+      - name: 10.102.187.188
+        port: 50051
+      - name: 10.102.187.167
+        port: 50051
+    sensors:
+      - name: /junos/system/linecard/cpu/memory/
+        frecuency: 10000
+      - name: /interfaces/
+        frecuency: 30000
+    #optional:
+    #  - certfile: /var/tmp/cert.pem
+
+envs:
+  - output_influxdb: true
+    output_stdout: false
+    output_kafka: true
+    default_frecuency: 50000

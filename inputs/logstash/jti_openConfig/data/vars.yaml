@@ -1,0 +1,49 @@
+
+groups:
+  - mx960:
+    hostname: 10.102.187.188:50051
+    sensors:
+      - name: /junos/system/linecard/cpu/memory/
+        tag_keys: 
+          - "device"
+          - "/components/component/@name"
+          - "/components/component/propertiesproperty/@name"
+      - name: /interfaces/
+        tag_keys:
+          - "device"
+          - "/interfaces/interface/@name"
+          - "/interfaces/interface/state/parent_ae_name"
+    port: 50051
+    frecuency: 10000
+    #optional:
+    #  - certfile: /var/tmp/cert.pem
+    #    username: lab
+    #    password: lab123
+    #    clientID: test
+  #- mx80:
+  #  hostname: 10.102.187.167:50051
+  #  sensors:
+  #    - name: /junos/system/linecard/cpu/memory/
+  #      tag_keys: 
+  #        - "device"
+  #        - "/components/component/@name"
+  #        - "/components/component/propertiesproperty/@name"
+  #    - name: /interfaces/
+  #      tag_keys:
+  #        - "device"
+  #        - "/interfaces/interface/@name"
+  #        - "/interfaces/interface/state/parent_ae_name"
+  #  port: 50051
+  #  frecuency: 3000
+  #  optional:
+  #    - certfile: /var/tmp/cert.pem
+  #      username: lab
+  #      password: lab444
+  #      clientID: test
+
+
+envs:
+  - output_influxdb: true
+    output_stdout: false
+    output_kafka: false 
+    output_elastic: false 
