@@ -22,5 +22,5 @@ envs:
   - output_influxdb: true
     output_stdout: false 
     output_kafka: false
-    ouput_elastic: true 
+    ouput_elastic: false 
     port: 50000
